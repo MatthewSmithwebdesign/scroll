@@ -14,7 +14,8 @@ function imageLoaded() {
 imagesLoaded++;
 if (imagesLoaded === totalImages){
     ready = true;
-    console.log('ready =', ready)
+    loader.hidden = true;
+    
 }
 }
 // helper function to set attributes on Dom Elelments
@@ -26,8 +27,9 @@ function setAttributes(element, attributes){
 
 // create links for photos and elements and add to dom
 function displayPhotos(){
+    imagesLoaded = 0;
     totalImages = photosArray.length;
-    console.log('total images', totalImages);
+    
     // for each odject in array
     photosArray.forEach((photo) => {
         // create and anchor to connect to unsplash
@@ -72,7 +74,8 @@ async function getPhotos(){
 
 // check to see if scrolling
 window.addEventListener('scroll', () =>  {
-if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 && ready) {
+  ready = false;
     getPhotos();
 }
 });
